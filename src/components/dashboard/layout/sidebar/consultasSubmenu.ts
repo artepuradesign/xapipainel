@@ -29,6 +29,11 @@ export const createConsultasSubmenu = (): SidebarItem => ({
       path: '/dashboard/busca-nome'
     },
     {
+      icon: User,
+      label: 'Consultar Nome Completo',
+      path: '/dashboard/consultar-nome-completo'
+    },
+    {
       icon: Users,
       label: 'Busca Mãe',
       path: '/dashboard/busca-mae'
