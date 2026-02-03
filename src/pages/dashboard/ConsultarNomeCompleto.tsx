@@ -171,11 +171,11 @@ const ConsultarNomeCompleto: React.FC = () => {
     <div className="min-h-screen bg-background">
       <SimpleTitleBar 
         title="Consulta por Nome Completo"
-        subtitle="Busque informações por nome completo"
+        subtitle="Consulte informações detalhadas por nome"
         onBack={() => navigate('/dashboard')}
       />
 
-      <div className={`p-3 sm:p-4 md:p-6 space-y-4 sm:space-y-6 ${isMobile ? 'pb-24' : ''}`}>
+      <div className="p-4 md:p-6 space-y-6 max-w-6xl mx-auto">
         {/* Card de Preço */}
         <ElegantPriceCard
           originalPrice={modulePrice}
@@ -187,52 +187,52 @@ const ConsultarNomeCompleto: React.FC = () => {
         />
 
         {/* Card de Busca */}
-        <Card className="border-primary/20">
-          <CardHeader className="pb-3 sm:pb-4">
-            <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
-              <Search className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
-              Buscar por Nome
+        <Card className="shadow-lg">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Search className="h-5 w-5 text-primary" />
+              Buscar por Nome Completo
             </CardTitle>
-            <CardDescription className="text-xs sm:text-sm">
-              Digite o nome completo para buscar (mínimo 5 caracteres)
+            <CardDescription>
+              Digite o nome completo para buscar informações (mínimo 5 caracteres)
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="nome" className="text-sm">Nome Completo</Label>
-              <div className="flex gap-2">
+              <Label htmlFor="nome">Nome Completo</Label>
+              <div className="flex gap-3">
                 <Input
                   id="nome"
                   type="text"
-                  placeholder="Ex: JOÃO DA SILVA"
+                  placeholder="Digite o nome completo (Ex: JOÃO DA SILVA)"
                   value={nome}
                   onChange={(e) => setNome(formatNome(e.target.value))}
                   onKeyPress={handleKeyPress}
-                  className="flex-1 uppercase text-sm sm:text-base"
+                  className="flex-1 uppercase"
                   disabled={isSearching}
                   minLength={5}
                 />
                 <Button 
                   onClick={handleSearch} 
                   disabled={isSearching || !hasEnoughBalance || nome.trim().length < 5}
-                  className="shrink-0"
-                  size={isMobile ? "default" : "default"}
+                  size="lg"
+                  className="px-6"
                 >
                   {isSearching ? (
-                    <div className="flex items-center gap-2">
-                      <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full" />
-                      <span className="hidden sm:inline">Buscando...</span>
-                    </div>
+                    <>
+                      <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full mr-2" />
+                      Buscando...
+                    </>
                   ) : (
-                    <div className="flex items-center gap-2">
-                      <Search className="h-4 w-4" />
-                      <span className="hidden sm:inline">Consultar</span>
-                    </div>
+                    <>
+                      <Search className="h-4 w-4 mr-2" />
+                      Consultar
+                    </>
                   )}
                 </Button>
               </div>
               {nome.length > 0 && nome.length < 5 && (
-                <p className="text-xs text-muted-foreground">
+                <p className="text-sm text-muted-foreground">
                   Faltam {5 - nome.length} caracteres
                 </p>
               )}
@@ -241,16 +241,16 @@ const ConsultarNomeCompleto: React.FC = () => {
             {isSearching && (
               <div className="space-y-2">
                 <Progress value={searchProgress} className="h-2" />
-                <p className="text-xs text-center text-muted-foreground">
+                <p className="text-sm text-center text-muted-foreground">
                   Consultando... {searchProgress}%
                 </p>
               </div>
             )}
 
             {!hasEnoughBalance && !balanceLoading && (
-              <div className="flex items-center gap-2 p-3 bg-destructive/10 rounded-lg border border-destructive/20">
-                <AlertCircle className="h-4 w-4 text-destructive" />
-                <span className="text-xs sm:text-sm text-destructive">
+              <div className="flex items-center gap-2 p-4 bg-destructive/10 rounded-lg border border-destructive/20">
+                <AlertCircle className="h-5 w-5 text-destructive" />
+                <span className="text-sm text-destructive">
                   Saldo insuficiente. Adicione R$ {(finalPrice - totalBalance).toFixed(2)} para consultar.
                 </span>
               </div>
@@ -260,14 +260,14 @@ const ConsultarNomeCompleto: React.FC = () => {
 
         {/* Resultados */}
         {searchPerformed && (
-          <Card>
-            <CardHeader className="pb-3 sm:pb-4">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+          <Card className="shadow-lg">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <CardTitle className="flex items-center gap-2">
                   {totalEncontrados > 0 ? (
-                    <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-500" />
+                    <CheckCircle className="h-5 w-5 text-green-500" />
                   ) : (
-                    <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5 text-yellow-500" />
+                    <AlertCircle className="h-5 w-5 text-yellow-500" />
                   )}
                   Resultados da Consulta
                 </CardTitle>
@@ -275,7 +275,7 @@ const ConsultarNomeCompleto: React.FC = () => {
                   {totalEncontrados} registro(s) encontrado(s)
                 </Badge>
               </div>
-              <CardDescription className="text-xs sm:text-sm">
+              <CardDescription>
                 Nome consultado: <strong>{nomeConsultado}</strong>
               </CardDescription>
             </CardHeader>
